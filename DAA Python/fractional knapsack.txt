@@ -1,0 +1,39 @@
+def fractional_knapsack(weights, profits, capacity):
+    n = len(weights)
+
+    items = []
+
+    for i in range(n):
+        ratio = profits[i] / weights[i]
+        items.append((ratio, weights[i], profits[i]))
+
+    items.sort(reverse=True)
+
+    total_profit = 0
+
+    for ratio, weight, profit in items:
+        if capacity >= weight:
+            capacity -= weight
+            total_profit += profit
+        else:
+            total_profit += ratio * capacity
+            capacity = 0
+            break
+
+    return total_profit
+
+
+n = int(input("Enter number of items: "))
+
+weights = []
+profits = []
+
+for i in range(n):
+    weights.append(float(input("Enter weight: ")))
+    profits.append(float(input("Enter profit: ")))
+
+capacity = float(input("Enter knapsack capacity: "))
+
+max_profit = fractional_knapsack(weights, profits, capacity)
+
+print("Maximum Profit:", max_profit)
